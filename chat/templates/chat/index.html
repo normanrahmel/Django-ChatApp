@@ -20,7 +20,7 @@
   <header class="mdl-layout__header mdl-layout__header--scroll">
     <div class="mdl-layout__header-row">
       <!-- Title -->
-      <span class="mdl-layout-title">Welcome, {{request.user.first_name}}</span>
+      <span class="mdl-layout-title">Welcome, {{request.user}}</span>
       <!-- Add spacer, to align navigation to the right -->
       <div class="mdl-layout-spacer"></div>
       <!-- Navigation -->
@@ -44,6 +44,13 @@
   <main class="mdl-layout__content">
     <div class="page-content">
       <!-- Textfield with Floating Label -->
+
+      {%for message in messages%}
+      <div>
+        <span style="color: grey">[{{message.created_at}}]</span>
+        <b>{{message.author}}:</b> <i>{{ message.text}}</i>
+      </div>
+      {%endfor%}
 
       <form action="/chat/" method="post">
         {% csrf_token %}

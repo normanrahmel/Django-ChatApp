@@ -1,5 +1,6 @@
 from cgitb import text
 from email.message import Message
+from pyexpat.errors import messages
 from urllib.request import Request
 from django.shortcuts import render
 from .models import Chat, Message
@@ -15,4 +16,5 @@ def index(request):
             chat=myChat,
             receiver=request.user,
         )
-    return render(request, "chat/index.html", {"username": "John"})
+    chatMessages = Message.objects.filter(chat__id=1)
+    return render(request, "chat/index.html", {"messages": chatMessages})
