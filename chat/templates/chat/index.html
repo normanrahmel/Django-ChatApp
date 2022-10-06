@@ -20,7 +20,15 @@
   <header class="mdl-layout__header mdl-layout__header--scroll">
     <div class="mdl-layout__header-row">
       <!-- Title -->
-      <span class="mdl-layout-title">Welcome, {{request.user}}</span>
+      <span class="mdl-layout-title"> 
+        {% if request.user.is_authenticated%}
+        Welcome,
+        {{request.user}}</span>
+      {% else %}
+        Welcome, Pleas log in!
+    </span>
+      
+      {% endif %}
       <!-- Add spacer, to align navigation to the right -->
       <div class="mdl-layout-spacer"></div>
       <!-- Navigation -->
@@ -45,13 +53,12 @@
     <div class="page-content">
       <!-- Textfield with Floating Label -->
 
-      {%for message in messages%}
+      {% if request.user.is_authenticated%} {%for message in messages%}
       <div>
         <span style="color: grey">[{{message.created_at}}]</span>
         <b>{{message.author}}:</b> <i>{{ message.text}}</i>
       </div>
       {%endfor%}
-
       <form action="/chat/" method="post">
         {% csrf_token %}
         <div
@@ -71,6 +78,12 @@
           Send
         </button>
       </form>
+      {%else%}
+      <h1>Log in to chat</h1>
+      <br />
+      Pleas click
+      <a href="/login/">here</a>
+      {%endif%}
 
       <!-- Your content goes here -->
     </div>
