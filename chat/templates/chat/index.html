@@ -1,91 +1,32 @@
-<link
-  rel="stylesheet"
-  href="https://fonts.googleapis.com/icon?family=Material+Icons"
-/>
-<link
-  rel="stylesheet"
-  href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css"
-/>
-<script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+{% extends "base.html" %} {%block content%}
 
-<style>
-  .page-content {
-    padding: 100px 100px 100px 100px;
-  }
-</style>
-
-<!-- Uses a header that scrolls with the text, rather than staying
-  locked at the top -->
-<div class="mdl-layout mdl-js-layout">
-  <header class="mdl-layout__header mdl-layout__header--scroll">
-    <div class="mdl-layout__header-row">
-      <!-- Title -->
-      <span class="mdl-layout-title"> 
-        {% if request.user.is_authenticated%}
-        Welcome,
-        {{request.user}}</span>
-      {% else %}
-        Welcome, Pleas log in!
-    </span>
-      
-      {% endif %}
-      <!-- Add spacer, to align navigation to the right -->
-      <div class="mdl-layout-spacer"></div>
-      <!-- Navigation -->
-      <nav class="mdl-navigation">
-        <a class="mdl-navigation__link" href="">Link</a>
-        <a class="mdl-navigation__link" href="">Link</a>
-        <a class="mdl-navigation__link" href="">Link</a>
-        <a class="mdl-navigation__link" href="">Link</a>
-      </nav>
-    </div>
-  </header>
-  <div class="mdl-layout__drawer">
-    <span class="mdl-layout-title">Chatroom</span>
-    <nav class="mdl-navigation">
-      <a class="mdl-navigation__link" href="">Link</a>
-      <a class="mdl-navigation__link" href="">Link</a>
-      <a class="mdl-navigation__link" href="">Link</a>
-      <a class="mdl-navigation__link" href="">Link</a>
-    </nav>
-  </div>
-  <main class="mdl-layout__content">
-    <div class="page-content">
-      <!-- Textfield with Floating Label -->
-
-      {% if request.user.is_authenticated%} {%for message in messages%}
-      <div>
-        <span style="color: grey">[{{message.created_at}}]</span>
-        <b>{{message.author}}:</b> <i>{{ message.text}}</i>
-      </div>
-      {%endfor%}
-      <form action="/chat/" method="post">
-        {% csrf_token %}
-        <div
-          class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label"
-        >
-          <input
-            class="mdl-textfield__input"
-            type="text"
-            name="textmessage"
-            id="sample3"
-          />
-          <label class="mdl-textfield__label" for="sample3">Text...</label>
-        </div>
-        <button
-          class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
-        >
-          Send
-        </button>
-      </form>
-      {%else%}
-      <h1>Log in to chat</h1>
-      <br />
-      Pleas click
-      <a href="/login/">here</a>
-      {%endif%}
-
-      <!-- Your content goes here -->
-    </div>
-  </main>
+<!---->
+{% if request.user.is_authenticated%} {%for message in messages%}
+<div>
+  <span style="color: grey">[{{message.created_at}}]</span>
+  <b>{{message.author}}:</b> <i>{{ message.text}}</i>
 </div>
+{%endfor%}
+<form action="/chat/" method="post">
+  {% csrf_token %}
+  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+    <input
+      class="mdl-textfield__input"
+      type="text"
+      name="textmessage"
+      id="sample3"
+    />
+    <label class="mdl-textfield__label" for="sample3">Text...</label>
+  </div>
+  <button
+    class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
+  >
+    Send
+  </button>
+</form>
+{%else%}
+<h1>Log in to chat</h1>
+<br />
+Pleas click
+<a href="/login/">here</a>
+{%endif%} {%endblock%}
