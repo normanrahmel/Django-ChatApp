@@ -1,14 +1,18 @@
 .page-content {
     padding: 100px 100px 100px 100px;
-  }
-
-  form {
-    width: 100%;
-    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+  }
+
+  form {
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+   
   }
   p {
     font-size: 25px;
@@ -19,4 +23,7 @@
 
   button {
     margin-top: 20px;
+  }
+  .color-gray{
+    color: gray;
   }
