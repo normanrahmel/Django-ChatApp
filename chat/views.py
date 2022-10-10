@@ -32,7 +32,8 @@ def index(request):
                 new_message,
             ],
         )
-        return JsonResponse(serialized_obj[1:-1], safe=False)
+        return JsonResponse(serialized_obj, safe=False)
+    # return JsonResponse(serialized_obj[1:-1], safe=False)
     chatMessages = Message.objects.filter(chat__id=1)
     return render(request, "chat/index.html", {"messages": chatMessages})
 
