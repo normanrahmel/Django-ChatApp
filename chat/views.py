@@ -19,7 +19,8 @@ from django.core import serializers
 def index(request):
     if request.method == "POST":
         print("Received a Data " + request.POST["textmessage"])
-        myChat = Chat.objects.get(id=1)
+        # print("Received a Data " + request.POST.get("textmessage"))
+        myChat = Chat.objects.get(id=2)
         new_message = Message.objects.create(
             text=request.POST["textmessage"],
             author=request.user,
@@ -32,9 +33,9 @@ def index(request):
                 new_message,
             ],
         )
-        return JsonResponse(serialized_obj, safe=False)
-    # return JsonResponse(serialized_obj[1:-1], safe=False)
-    chatMessages = Message.objects.filter(chat__id=1)
+        # return JsonResponse(serialized_obj, safe=False)
+        return JsonResponse(serialized_obj[1:-1], safe=False)
+    chatMessages = Message.objects.filter(chat__id=2)
     return render(request, "chat/index.html", {"messages": chatMessages})
 
 

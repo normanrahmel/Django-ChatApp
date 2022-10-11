@@ -27,3 +27,13 @@
   .color-gray{
     color: gray;
   }
+  
+  #messageContainer{
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: 400px;
+    max-width: 350px;
+    width: fit-content;
+    word-break: break-word;
+    background-color: antiquewhite;
+  }

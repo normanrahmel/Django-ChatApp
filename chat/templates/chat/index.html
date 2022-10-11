@@ -16,11 +16,16 @@
 
     fd.append("textmessage", messageField.value);
     fd.append("csrfmiddlewaretoken", token);
+
+    let messageAuthor = "{{request.user.username}}";
+    let createdAt = "{{message.created_at}}";
+
     try {
       messageContainer.innerHTML += `
-            <div id="deleteMessage">
-                <span class="color-gray"> {{ request.user.first_name }}: <i class="color-gray">${messageField.value} </i></span>
-            </div>`;
+          <div id="deleteMessage">
+             <span class="color-gray"> ${messageAuthor}: <i class="color-gray">${messageField.value} </i></span>
+        </div>`;
+
       let response = await fetch("/chat/", {
         method: "POST",
         body: fd,
@@ -28,11 +33,18 @@
 
       let json = await response.json();
       console.log("json is", json);
+      console.log(JSON.parse(json));
+      console.log(json[0]);
+
+      // let messageDate = json["fields"]["created_at"];
+      //console.log(messageDate);
 
       document.getElementById("deleteMessage").remove();
+
       messageContainer.innerHTML += `
             <div">
-                <span> {{ request.user.first_name }}: <i>${messageField.value} </i></span>
+                <span class="color-gray">json${createdAt}</span> <br>
+                <span> ${messageAuthor}: <i>${messageField.value} </i></span>
             </div>`;
 
       messageField.value = "";
@@ -44,7 +56,7 @@
   }
 </script>
 
-<form onsubmit="sendMessage(); return false;" method="post">
+<form onsubmit="sendMessage(); return false;">
   {% csrf_token %}
   <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
     <input
